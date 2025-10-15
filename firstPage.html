@@ -1,11 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <script>
+      class Actor {
+        //Constructor method with x and y variables
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+        }
+
+        //Method
+        move(horizontal, vertical) {
+          this.x += horizontal;
+          this.y += vertical;
+        }
+        distanceTo(otherActor) {
+          let dx = otherActor.x - this.x;
+          let dy = otherActor.y - this.y;
+          let distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+          return distance;
+        }
+      }
+      class Player extends Actor {
+        constructor(x, y) {
+          super(x, y);
+          this.HP = 100;
+        }
+      }
+      class Enemy extends Actor {
+        attack(player) {
+          console.log("enemy is attacking!");
+          if (this.distanceTo(player) < 4) {
+            player.HP -= 10;
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+      class Follower extends Actor {
+        //Constructor
+        constructor(startX, startY, playerToFollow) {
+          super(startX, startY);
+          this.playerToFollow = playerToFollow;
+        }
+        //Method to follow a player specified in constructor once called
+        follow() {
+          this.startX = this.playerToFollow.x;
+          this.startY = this.playerToFollow.y;
+          console.log("following player...");
+          console.log(`follower is now at ${this.startX},${this.startY}`);
+        }
+      }
+      //Create an instance
+      let player1 = new Player(2, 2);
+      let player2 = new Player(3, 3);
+      let follower1 = new Follower(0, 0, player1);
+      let follower2 = new Follower(0, 0, player2);
+      console.log(`player1 is at ${player1.x},${player1.y}`);
+      console.log(`player2 is at ${player2.x},${player2.y}`);
+      console.log(`Follower 1 is at ${follower1.x}, ${follower1.y}`);
+      follower1.follow();
+      //Showing second follower follows another player instead of the same one
+      console.log(`Follower 2 is at ${follower2.x}, ${follower2.y}`);
+      follower2.follow();
+    </script>
+  </body>
 </html>
