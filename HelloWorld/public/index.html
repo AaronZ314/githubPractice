@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Aarons word of the day</title>
+    <link ref="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <h1>Welcome to Aarons word of the day page</h1>
+    <p>Everytime you visit we will show you a new word and its definition</p>
+    <p>This page has been visited <span id="hits"></span> times</p>
+    <p><a href="/word.html">View the word of the day</a></p>
+  </body>
+  <script>
+    fetch("/hits")
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById("hits").textContent = data.hitcount;
+      });
+  </script>
+</html>
